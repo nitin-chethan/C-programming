@@ -2,7 +2,9 @@
 #include<stdlib.h>
 #include<assert.h>
 
-void insertion_sort(int * A,int numElems);
+void insertion_sort(int * A,int numElems,int fun(const int a, const int b));
+int inc(int a, int b);
+int dec(int a, int b);
 
 int main()
 {
@@ -18,17 +20,36 @@ int main()
     //for(int i=0;i<numElems;i++)
     //    scanf("%d",A[i]);
     int A[5] = {4,3,7,9,1};
-    
-    insertion_sort(A,numElems);
+
+    insertion_sort(A,numElems,inc);
 
     for(int i=0;i<numElems;i++)
         printf("%d ",A[i]);
+
+    printf("\n");
+    insertion_sort(A,numElems,dec);
+
+    for(int i=0;i<numElems;i++)
+        printf("%d ",A[i]);
+
 
     return 0;    
     
 }
 
-void insertion_sort(int * A,int numElems)
+int inc(int a, int b)
+{
+    return(a<b);
+}
+
+
+int dec(int a, int b)
+{
+    return(a>b);
+}
+
+
+void insertion_sort(int * A,int numElems,int fun(const int a,const int b))
 {
     int i,j,curr;
 
@@ -37,7 +58,7 @@ void insertion_sort(int * A,int numElems)
         j=i-1;
         curr = A[i];
         
-        while(j>=0 && A[j]>curr)
+        while(j>=0 && fun(curr,A[j]))
         {
             A[j+1] = A[j];
             j--;
